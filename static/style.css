@@ -1,0 +1,82 @@
+:root {
+  --sidebar-width: 220px;
+  --bg-sidebar: #1f2937;
+  --bg-main: #f9fafb;
+  --text-light: #f3f4f6;
+  --text-dark: #111827;
+  --accent: #3b82f6;
+  --border-color: #e5e7eb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  display: flex;
+  height: 100vh;
+  color: var(--text-dark);
+  background-color: var(--bg-main);
+}
+
+/* Layout */
+.app-container {
+  display: flex;
+  width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+  width: var(--sidebar-width);
+  background-color: var(--bg-sidebar);
+  color: var(--text-light);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.logo {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-item {
+  color: var(--text-light);
+  text-decoration: none;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
+}
+
+.nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-item.active {
+  background-color: var(--accent);
+  color: white;
+}
+
+/* Main area */
+.main {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.main-header {
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 1rem;
+}
+
+#main-content {
+  padding-top: 1rem;
+}
