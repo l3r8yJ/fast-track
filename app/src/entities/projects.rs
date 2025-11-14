@@ -4,14 +4,22 @@ use sea_orm::entity::prelude::*;
 
 #[sea_orm::model]
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel)]
-#[sea_orm(table_name = "statuses")]
+#[sea_orm(table_name = "projects")]
 pub struct Model {
     #[sea_orm(primary_key, auto_increment = false)]
     pub id: Uuid,
     #[sea_orm(column_type = "Text")]
-    pub name: String,
+    pub title: String,
+    pub owner_id: Uuid,
+    pub created_at: DateTime,
+    pub updated_at: DateTime,
+    pub archived_at: Option<DateTime>,
     #[sea_orm(has_many)]
     pub issues: HasMany<super::issues::Entity>,
+    #[sea_orm(has_many)]
+    pub statuses: HasMany<super::statuses::Entity>,
+    #[sea_orm(has_many, via = "projects_to_users")]
+    pub users: HasMany<super::users::Entity>,
 }
 
 impl ActiveModelBehavior for ActiveModel {}

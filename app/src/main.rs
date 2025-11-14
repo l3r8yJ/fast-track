@@ -9,22 +9,15 @@ use std::{net::SocketAddr, sync::Arc};
 use axum::{Extension, Router, routing::get};
 use tower_http::services::ServeDir;
 
-use crate::{
-    db::migrate::run_migrations,
-    pages::{index::index, projects::projects_handler},
-};
+use crate::pages::{index::index, projects::projects_handler};
 
 #[tokio::main]
 async fn main() {
     tracing_subscriber::fmt::init();
     env::load::from_dotenv();
-    // TODO: run migrations during the build
-    // TODO: run codegen during the build
     // TODO: add pdd
-    run_migrations().await.expect("Can't apply migrations");
     // let (tx, _rx) = broadcast::channel::<String>(16);
     let db_connection = Arc::new(db::connection::get().await);
-
     let app = Router::new()
         .nest_service("/static", ServeDir::new("./static"))
         .route("/", get(index))

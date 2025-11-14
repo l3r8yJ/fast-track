@@ -8,28 +8,40 @@ use sea_orm::entity::prelude::*;
 pub struct Model {
     #[sea_orm(primary_key, auto_increment = false)]
     pub id: Uuid,
-    pub project_id: Option<Uuid>,
-    pub status_id: Option<Uuid>,
-    #[sea_orm(column_type = "Text", unique)]
-    pub name: String,
+    #[sea_orm(column_type = "Text")]
+    pub title: String,
     #[sea_orm(column_type = "Text", nullable)]
     pub description: Option<String>,
+    pub status_id: Option<Uuid>,
+    pub project_id: Uuid,
+    pub assignee_id: Option<Uuid>,
+    pub created_at: DateTime,
+    pub updated_at: DateTime,
+    pub archived_at: Option<DateTime>,
     #[sea_orm(
         belongs_to,
         from = "project_id",
         to = "id",
         on_update = "NoAction",
-        on_delete = "NoAction"
+        on_delete = "Cascade"
     )]
     pub projects: HasOne<super::projects::Entity>,
     #[sea_orm(
         belongs_to,
-        from = "status_id",
-        to = "id",
+        from = "(status_id, project_id)",
+        to = "(id, project_id)",
         on_update = "NoAction",
-        on_delete = "NoAction"
+        on_delete = "SetNull"
     )]
     pub statuses: HasOne<super::statuses::Entity>,
+    #[sea_orm(
+        belongs_to,
+        from = "assignee_id",
+        to = "id",
+        on_update = "NoAction",
+        on_delete = "SetNull"
+    )]
+    pub users: HasOne<super::users::Entity>,
 }
 
 impl ActiveModelBehavior for ActiveModel {}

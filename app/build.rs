@@ -1,14 +1,19 @@
 use std::{fs, process::Command};
 
-fn main() {
-    // println!("cargo:rerun-if-changed=migrations");
-    // let migrations_status = Command::new("cargo")
-    //     .args(["run", "--bin", "migration_runner"])
-    //     .status()
-    //     .expect("failed to run migrations");
-    // assert!(migrations_status.success(), "migrations failed");
-    println!("cargo:rerun-if-changed=migrations");
+use refinery_macros::embed_migrations;
+
+use crate::migrations::runner;
+
+embed_migrations!("../migrations");
+
+#[tokio::main]
+async fn main() {
+    println!("cargo:rerun-if-changed=../migrations");
     dotenvy::dotenv().ok();
+    let runner = runner();
+    migration_lib::run_migrations_async(runner)
+        .await
+        .expect("failed to run migrations");
     let _ = fs::remove_dir_all("src/entities");
     let generate_entities_status = Command::new("sea-orm-cli")
         .args([

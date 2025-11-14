@@ -4,5 +4,7 @@ pub mod prelude;
 
 pub mod issues;
 pub mod projects;
+pub mod projects_to_users;
 pub mod refinery_schema_history;
 pub mod statuses;
+pub mod users;

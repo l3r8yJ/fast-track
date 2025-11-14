@@ -2,5 +2,7 @@
 
 pub use super::issues::Entity as Issues;
 pub use super::projects::Entity as Projects;
+pub use super::projects_to_users::Entity as ProjectsToUsers;
 pub use super::refinery_schema_history::Entity as RefinerySchemaHistory;
 pub use super::statuses::Entity as Statuses;
+pub use super::users::Entity as Users;
