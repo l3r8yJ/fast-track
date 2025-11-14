@@ -4,12 +4,15 @@ pub mod env;
 pub mod pages;
 pub mod templates;
 
-use std::net::SocketAddr;
+use std::{net::SocketAddr, sync::Arc};
 
-use axum::{Router, routing::get};
+use axum::{Extension, Router, routing::get};
 use tower_http::services::ServeDir;
 
-use crate::{db::migrate::run_migrations, pages::index::index};
+use crate::{
+    db::migrate::run_migrations,
+    pages::{index::index, projects::projects_handler},
+};
 
 #[tokio::main]
 async fn main() {
@@ -17,11 +20,16 @@ async fn main() {
     env::load::from_dotenv();
     // TODO: run migrations during the build
     // TODO: run codegen during the build
+    // TODO: add pdd
     run_migrations().await.expect("Can't apply migrations");
     // let (tx, _rx) = broadcast::channel::<String>(16);
+    let db_connection = Arc::new(db::connection::get().await);
+
     let app = Router::new()
         .nest_service("/static", ServeDir::new("./static"))
-        .route("/", get(index));
+        .route("/", get(index))
+        .route("/projects", get(projects_handler))
+        .layer(Extension(db_connection));
     let listener = tokio::net::TcpListener::bind("127.0.0.1:3000")
         .await
         .unwrap();

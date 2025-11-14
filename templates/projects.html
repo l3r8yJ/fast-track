@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>{{ title }}</title>
+  <title>Projects</title>
   <link rel="stylesheet" href="/static/style.css">
   <script src="https://unpkg.com/htmx.org@2.0.2"></script>
 </head>
@@ -12,10 +12,10 @@
   <div class="app-container">
     <!-- Sidebar -->
     <aside class="sidebar">
-      <h2 class="logo">🦀 {{ title }}</h2>
+      <h2 class="logo">FastTrack</h2>
 
       <nav class="nav">
-        <a hx-get="/projects" hx-target="#main-content" class="nav-item">Projects</a>
+        <a hx-get="/projects" hx-trigger="click" class="nav-item active">Projects</a>
         <a hx-get="/backlog" hd-trigger="click" class="nav-item">Backlog</a>
       </nav>
     </aside>
@@ -26,10 +26,7 @@
         <h1>Dashboard</h1>
       </header>
 
-      <section id="main-content">
-        <p>Welcome to your fast tracker workspace.</p>
-        <p>Select a project or open the backlog to get started.</p>
-      </section>
+      <section id="main-content"></section>
     </main>
   </div>
 </body>
