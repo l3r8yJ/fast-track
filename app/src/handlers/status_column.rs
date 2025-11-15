@@ -1,9 +1,9 @@
 use askama::Template;
 use axum::{
-    extract::{Path, State, Query},
+    extract::{Path, Query, State},
     response::Html,
 };
-use sea_orm::{EntityTrait, ColumnTrait, QueryFilter, QueryOrder, QuerySelect};
+use sea_orm::{ColumnTrait, EntityTrait, QueryFilter, QueryOrder, QuerySelect};
 use serde::Deserialize;
 use uuid::Uuid;
 
@@ -31,7 +31,6 @@ pub async fn status_column_handler(
     Path((project_id, status_id)): Path<(Uuid, Uuid)>,
     Query(params): Query<PaginationQuery>,
 ) -> Html<String> {
-    // Fetch limited issues for this status and project
     let issues = entities::issues::Entity::find()
         .filter(entities::issues::Column::StatusId.eq(status_id))
         .filter(entities::issues::Column::ProjectId.eq(project_id))
@@ -41,7 +40,6 @@ pub async fn status_column_handler(
         .all(&*state.db)
         .await
         .unwrap_or_default();
-
     let template = StatusColumnTemplate { issues };
     Html(template.render().unwrap())
 }

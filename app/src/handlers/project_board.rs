@@ -3,7 +3,7 @@ use axum::{
     extract::{Path, State},
     response::Html,
 };
-use sea_orm::{EntityTrait, ColumnTrait, QueryFilter};
+use sea_orm::{ColumnTrait, EntityTrait, QueryFilter};
 use uuid::Uuid;
 
 use crate::entities;
@@ -14,7 +14,6 @@ pub async fn project_board_handler(
     State(state): State<AppState>,
     Path(project_id): Path<Uuid>,
 ) -> Html<String> {
-    // Fetch project and statuses from database
     let project = entities::projects::Entity::find_by_id(project_id)
         .one(&*state.db)
         .await
@@ -26,7 +25,6 @@ pub async fn project_board_handler(
         .all(&*state.db)
         .await
         .expect("Failed to fetch statuses");
-
     let template = ProjectBoardTemplate { project, statuses };
     Html(template.render().unwrap())
 }

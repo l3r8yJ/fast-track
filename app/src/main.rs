@@ -16,9 +16,7 @@ async fn main() {
     // let (tx, _rx) = broadcast::channel::<String>(16);
     let db_connection = services::connection::get().await;
     let app_state = state::AppState::new(db_connection);
-
     let app = routes::create_router(app_state);
-
     let listener = tokio::net::TcpListener::bind("127.0.0.1:3000")
         .await
         .unwrap();
