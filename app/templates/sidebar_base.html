@@ -10,21 +10,22 @@
 
 <div class="sidebar-header">Projects</div>
 
-{% if projects %}
+{% if projects.is_empty() %}
+<p style="color: rgba(255,255,255,0.7); font-size: 12px; padding: 12px; text-align: center;">No projects yet</p>
+{% else %}
 <div class="project-list">
   {% for project in projects %}
   <button class="project-item" 
     hx-get="/projects/{{ project.id }}/board" 
     hx-target="#main-board" 
-    hx-swap="innerHTML">
+    hx-swap="innerHTML"
+    hx-boost="false">
     {{ project.title }}
   </button>
   {% endfor %}
 </div>
-{% else %}
-<p style="color: rgba(255,255,255,0.7); font-size: 12px; padding: 12px; text-align: center;">No projects yet</p>
 {% endif %}
 
-<button class="btn btn-primary" style="width: 100%; margin-top: 20px;">
+<button class="btn btn-primary" style="width: 100%; margin-top: 20px;" hx-get="/projects/new" hx-swap="afterbegin" hx-target="body">
   + New Project
 </button>

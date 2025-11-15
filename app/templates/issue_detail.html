@@ -1,35 +1,95 @@
 <div class="issue-detail">
   <div class="issue-header">
-    <h2>Issue-{{ issue.id }}</h2>
-    <button class="icon-btn" hx-delete="/issues/{{ issue.id }}" hx-target="#main-board" hx-swap="innerHTML">🗑</button>
+    <div>
+      <h2>{{ issue.title }}</h2>
+      <p class="issue-id">Issue ID: {{ issue.id }}</p>
+    </div>
+    <button class="icon-btn" 
+      hx-delete="/issues/{{ issue.id }}" 
+      hx-target="#issue-panel" 
+      hx-swap="innerHTML"
+      hx-confirm="Delete this issue?">
+      🗑
+    </button>
   </div>
 
   <div class="issue-info">
-    <div class="issue-description">
-      {{ issue.description | markdown }}
+    {% if issue.description %}
+    <div class="issue-section">
+      <h3>Description</h3>
+      <div class="issue-description">
+        {{ issue.description | markdown }}
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="issue-section">
+      <h3>Details</h3>
+      <div class="issue-meta">
+        <div class="meta-row">
+          <span class="meta-label">Status:</span>
+          <span class="status-badge" style="background: {{ issue.status_color }}">{{ issue.status_code }}</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">Assignee:</span>
+          <span>{{ issue.assignee_fullname | default: "Unassigned" }}</span>
+        </div>
+        {% if issue.estimation %}
+        <div class="meta-row">
+          <span class="meta-label">Estimation:</span>
+          <span>{{ issue.estimation }}</span>
+        </div>
+        {% endif %}
+        <div class="meta-row">
+          <span class="meta-label">Created:</span>
+          <small>{{ issue.created_at | date }}</small>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">Updated:</span>
+          <small>{{ issue.updated_at | date }}</small>
+        </div>
+      </div>
     </div>
 
-    <div class="issue-meta">
-      <div>Assignee: {{ issue.assignee_fullname }}</div>
-      <div>Estimation: {{ issue.estimation }}</div>
-
-      <div>Linked PRs:
+    {% if prs %}
+    <div class="issue-section">
+      <h3>Linked PRs</h3>
+      <div class="links-list">
         {% for pr in prs %}
-        <a href="{{ pr.url }}">{{ pr.name }}</a><br>
-        {% endfor %}
-      </div>
-
-      <div>Linked tasks:
-        {% for t in tasks %}
-        <a href="#" hx-get="/issues/{{ t.id }}" hx-target="#issue-panel">{{ t.title }}</a><br>
+        <a href="{{ pr.url }}" target="_blank" class="link-item">{{ pr.name }}</a>
         {% endfor %}
       </div>
     </div>
+    {% endif %}
+
+    {% if tasks %}
+    <div class="issue-section">
+      <h3>Linked Tasks</h3>
+      <div class="links-list">
+        {% for t in tasks %}
+        <a href="#" 
+          hx-get="/issues/{{ t.id }}" 
+          hx-target="#issue-panel"
+          hx-swap="innerHTML"
+          class="link-item">
+          {{ t.title }}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
   </div>
 
+  {% if comments %}
   <div class="issue-comments">
+    <h3>Comments ({{ comments | length }})</h3>
     {% for c in comments %}
-    <div class="comment">{{ c.text }}</div>
+    <div class="comment">
+      <div class="comment-author">{{ c.author }}</div>
+      <div class="comment-text">{{ c.text }}</div>
+      <small class="comment-date">{{ c.created_at | date }}</small>
+    </div>
     {% endfor %}
   </div>
+  {% endif %}
 </div>

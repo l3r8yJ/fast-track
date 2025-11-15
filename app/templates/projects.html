@@ -1,33 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <title>Projects</title>
-  <link rel="stylesheet" href="/static/style.css">
-  <script src="https://unpkg.com/htmx.org@2.0.2"></script>
-</head>
-
-<body>
-  <div class="app-container">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <h2 class="logo">FastTrack</h2>
-
-      <nav class="nav">
-        <a hx-get="/projects" hx-trigger="click" class="nav-item active">Projects</a>
-      </nav>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="main">
-      <header class="main-header">
-        <h1>Dashboard</h1>
-      </header>
-
-      <section id="main-content"></section>
-    </main>
+{% if !projects.is_empty() %}
+<div class="projects-grid">
+  {% for project in projects %}
+  <div class="project-card">
+    <h3 class="project-title">{{ project.title }}</h3>
+    <a hx-get="/projects/{{ project.id }}/board" 
+       hx-target="#main-content" 
+       hx-swap="innerHTML"
+       class="btn btn-primary btn-sm">Open Board</a>
   </div>
-</body>
-
-</html>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+  <p>No projects yet. Create one to get started.</p>
+</div>
+{% endif %}

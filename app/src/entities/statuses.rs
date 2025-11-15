@@ -12,10 +12,10 @@ pub struct Model {
         unique_key = "uq_status_id_project"
     )]
     pub id: Uuid,
-    #[sea_orm(column_type = "Text")]
+    #[sea_orm(column_type = "Text", unique_key = "uq_status_code_project")]
     pub code: String,
     pub weight: i32,
-    #[sea_orm(unique_key = "uq_status_id_project")]
+    #[sea_orm(unique_key = "uq_status_code_project")]
     pub project_id: Uuid,
     pub created_at: DateTime,
     pub updated_at: DateTime,

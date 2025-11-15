@@ -3,26 +3,37 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Issue Tracker</title>
-  <script src="https://unpkg.com/htmx.org"></script>
-  <script src="https://unpkg.com/hyperscript.org"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FastTrack - Issue Tracker</title>
+  <script src="https://unpkg.com/htmx.org@2.0.2"></script>
+  <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
   <link rel="stylesheet" href="/static/style.css" />
 </head>
 
 <body class="app-grid">
 
   <!-- Sidebar -->
-  <aside id="sidebar" class="sidebar" hx-get="/projects" hx-trigger="load" hx-target="#sidebar" hx-swap="innerHTML">
+  <aside id="sidebar" class="sidebar" 
+    hx-get="/sidebar" 
+    hx-trigger="load" 
+    hx-target="#sidebar" 
+    hx-swap="innerHTML"
+    hx-indicator="#sidebar-spinner">
+    <div id="sidebar-spinner" class="spinner htmx-indicator"></div>
   </aside>
 
-  <!-- Kanban board area -->
-  <main id="main-board" class="board-area" hx-get="/projects/default/board" hx-trigger="load" hx-target="#main-board"
-    hx-swap="innerHTML">
+  <!-- Main Board Area -->
+  <main id="main-board" class="board-area">
+    <div class="empty-state">
+      <p>Select a project from the sidebar</p>
+    </div>
   </main>
 
-  <!-- Issue detail panel -->
+  <!-- Issue Detail Panel -->
   <section id="issue-panel" class="issue-panel">
-    <!-- Populated when an issue card is clicked -->
+    <div class="issue-panel-empty">
+      <p>Select an issue to view details</p>
+    </div>
   </section>
 
 </body>

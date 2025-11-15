@@ -1,11 +1,28 @@
+<div class="board-header">
+  <h2>{{ project.title }}</h2>
+  <div class="board-actions">
+    <button class="btn btn-sm btn-primary">+ Add Issue</button>
+  </div>
+</div>
+
+{% if statuses.is_empty() %}
+<div class="empty-state">
+  <p>No statuses configured for this project.</p>
+</div>
+{% else %}
 <div class="board">
   {% for status in statuses %}
   <div class="status-column">
-    <div class="status-title">{{ status.code }}</div>
-    <div id="status-{{ status.id }}" class="status-body" hx-get="/projects/{{ project.id }}/status/{{ status.id }}"
-      hx-trigger="load" hx-target="#status-{{ status.id }}">
-      <!-- Issues load here -->
+    <div class="status-title">
+      {{ status.code }}
+      <span style="font-size: 11px; opacity: 0.8; margin-left: 8px;">Weight: {{ status.weight }}</span>
+    </div>
+    <div id="status-{{ status.id }}" class="status-body"
+      hx-get="/projects/{{ project.id }}/status/{{ status.id }}"
+      hx-trigger="load delay:100ms"
+      hx-swap="innerHTML">
     </div>
   </div>
   {% endfor %}
 </div>
+{% endif %}

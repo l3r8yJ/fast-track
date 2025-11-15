@@ -1,0 +1,4 @@
+<script>
+    document.getElementById('new-project-modal').remove();
+    htmx.ajax('GET', '/sidebar', {target: '#sidebar', swap: 'innerHTML'});
+</script>
