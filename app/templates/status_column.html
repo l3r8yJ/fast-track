@@ -1,15 +1,13 @@
 {% if issues.is_empty() %}
-<div class="status-empty">
-  <p>No issues</p>
-</div>
+<div class="empty-state">No issues</div>
 {% else %}
 {% for issue in issues %}
-<div class="issue-card" 
-  hx-get="/issues/{{ issue.id }}" 
-  hx-target="#issue-panel" 
+<button class="issue-item"
+  hx-get="/issues/{{ issue.id }}"
+  hx-target="aside#issue-panel > article"
   hx-swap="innerHTML"
   hx-boost="false">
-  <div class="issue-card-title">{{ issue.title }}</div>
-</div>
+  {{ issue.title }}
+</button>
 {% endfor %}
 {% endif %}

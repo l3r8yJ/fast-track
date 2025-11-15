@@ -1,6 +1,6 @@
-<div class="issue-card" 
-  hx-get="/issues/{{ issue.id }}" 
-  hx-target="#issue-panel" 
+<button class="issue-item"
+  hx-get="/issues/{{ issue.id }}"
+  hx-target="aside#issue-panel > article"
   hx-swap="innerHTML">
-  <div class="issue-card-title">{{ issue.title }}</div>
-</div>
+  {{ issue.title }}
+</button>

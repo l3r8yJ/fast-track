@@ -1,23 +1,26 @@
-<div class="logo">
-  <span>⚡</span>
-  <span>FastTrack</span>
+<div class="sidebar-header">
+  <h1>⚡ FastTrack</h1>
 </div>
 
-<nav class="nav">
-  <a class="nav-item" href="/">Dashboard</a>
-  <a class="nav-item" href="/users">Users</a>
+<nav class="sidebar-nav">
+  <a href="/">Dashboard</a>
+  <a href="/users">Users</a>
 </nav>
 
-<div class="sidebar-header">Projects</div>
+<div class="sidebar-section-title">Projects</div>
 
 {% if projects.is_empty() %}
-<p style="color: rgba(255,255,255,0.7); font-size: 12px; padding: 12px; text-align: center;">No projects yet</p>
+<div class="project-list">
+  <div style="padding: 16px; text-align: center; font-size: 13px; color: var(--text-tertiary);">
+    No projects yet
+  </div>
+</div>
 {% else %}
 <div class="project-list">
   {% for project in projects %}
-  <button class="project-item" 
-    hx-get="/projects/{{ project.id }}/board" 
-    hx-target="#main-board" 
+  <button class="project-item"
+    hx-get="/projects/{{ project.id }}/board"
+    hx-target="#main-board"
     hx-swap="innerHTML"
     hx-boost="false">
     {{ project.title }}
@@ -26,6 +29,6 @@
 </div>
 {% endif %}
 
-<button class="btn btn-primary" style="width: 100%; margin-top: 20px;" hx-get="/projects/new" hx-swap="afterbegin" hx-target="body">
+<button class="new-project-btn" hx-get="/projects/new" hx-swap="afterbegin" hx-target="body">
   + New Project
 </button>

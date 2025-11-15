@@ -5,37 +5,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FastTrack - Issue Tracker</title>
+  <link rel="stylesheet" href="/static/custom.css" />
   <script src="https://unpkg.com/htmx.org@2.0.2"></script>
-  <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
-  <link rel="stylesheet" href="/static/style.css" />
 </head>
 
-<body class="app-grid">
-
-  <!-- Sidebar -->
-  <aside id="sidebar" class="sidebar" 
-    hx-get="/sidebar" 
-    hx-trigger="load" 
-    hx-target="#sidebar" 
-    hx-swap="innerHTML"
-    hx-indicator="#sidebar-spinner">
-    <div id="sidebar-spinner" class="spinner htmx-indicator"></div>
+<body>
+  <aside id="sidebar" hx-get="/sidebar" hx-trigger="load" hx-target="#sidebar" hx-swap="innerHTML">
+    <div class="sidebar-header">
+      <h1>⚡ FastTrack</h1>
+    </div>
+    <div style="padding: 16px; text-align: center; color: var(--text-tertiary);">Loading...</div>
   </aside>
 
-  <!-- Main Board Area -->
-  <main id="main-board" class="board-area">
-    <div class="empty-state">
-      <p>Select a project from the sidebar</p>
+  <main id="main-board">
+    <div style="padding: 32px; text-align: center; color: var(--text-tertiary);">
+      <p>Select a project from the sidebar to get started</p>
     </div>
   </main>
 
-  <!-- Issue Detail Panel -->
-  <section id="issue-panel" class="issue-panel">
-    <div class="issue-panel-empty">
-      <p>Select an issue to view details</p>
-    </div>
-  </section>
-
+  <aside id="issue-panel">
+    <article></article>
+  </aside>
 </body>
 
 </html>
