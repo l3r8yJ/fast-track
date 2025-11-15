@@ -1,82 +1,182 @@
-:root {
-  --sidebar-width: 220px;
-  --bg-sidebar: #1f2937;
-  --bg-main: #f9fafb;
-  --text-light: #f3f4f6;
-  --text-dark: #111827;
-  --accent: #3b82f6;
-  --border-color: #e5e7eb;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
+/* Global layout */
+body,
+html {
   margin: 0;
-  font-family: system-ui, sans-serif;
-  display: flex;
-  height: 100vh;
-  color: var(--text-dark);
-  background-color: var(--bg-main);
+  padding: 0;
+  font-family: Arial, sans-serif;
+  height: 100%;
 }
 
-/* Layout */
-.app-container {
-  display: flex;
-  width: 100%;
+.app-grid {
+  display: grid;
+  grid-template-columns: 220px 1fr 320px;
+  grid-template-rows: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 
 /* Sidebar */
 .sidebar {
-  width: var(--sidebar-width);
-  background-color: var(--bg-sidebar);
-  color: var(--text-light);
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-}
-
-.logo {
-  font-size: 1.25rem;
-  margin-bottom: 1.5rem;
-}
-
-.nav {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.nav-item {
-  color: var(--text-light);
-  text-decoration: none;
-  padding: 0.5rem;
-  border-radius: 0.25rem;
-  transition: background-color 0.2s;
-}
-
-.nav-item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.nav-item.active {
-  background-color: var(--accent);
-  color: white;
-}
-
-/* Main area */
-.main {
-  flex: 1;
-  padding: 2rem;
+  background-color: #f5f5f5;
+  border-right: 1px solid #ddd;
+  padding: 16px;
   overflow-y: auto;
 }
 
-.main-header {
-  border-bottom: 1px solid var(--border-color);
-  margin-bottom: 1rem;
+.sidebar-header {
+  font-weight: bold;
+  margin-bottom: 12px;
+  font-size: 1.1em;
 }
 
-#main-content {
-  padding-top: 1rem;
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project-item {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  text-align: left;
+}
+
+.project-item:hover {
+  background-color: #e0e0e0;
+}
+
+/* Board */
+.board-area {
+  display: flex;
+  overflow-x: auto;
+  padding: 16px;
+  gap: 16px;
+  background-color: #fafafa;
+}
+
+.status-column {
+  background-color: #fefefe;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 32px);
+}
+
+.status-title {
+  padding: 12px;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  background-color: #f0f0f0;
+}
+
+.status-body {
+  padding: 12px;
+  flex-grow: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Issue cards */
+.issue-card {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.issue-card:hover {
+  background-color: #e6f7ff;
+  transform: translateY(-1px);
+}
+
+/* Issue detail panel */
+.issue-panel {
+  background-color: #fefefe;
+  border-left: 1px solid #ddd;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.issue-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.issue-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.issue-header h2 {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.icon-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+.issue-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.issue-description {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+}
+
+.issue-meta {
+  font-size: 0.9em;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.issue-comments {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.comment {
+  padding: 6px 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #fafafa;
+}
+
+/* Scrollbar styling */
+.status-body::-webkit-scrollbar,
+.issue-panel::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.status-body::-webkit-scrollbar-thumb,
+.issue-panel::-webkit-scrollbar-thumb,
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
 }

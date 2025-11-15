@@ -1,0 +1,35 @@
+<div class="issue-detail">
+  <div class="issue-header">
+    <h2>Issue-{{ issue.id }}</h2>
+    <button class="icon-btn" hx-delete="/issues/{{ issue.id }}" hx-target="#main-board" hx-swap="innerHTML">🗑</button>
+  </div>
+
+  <div class="issue-info">
+    <div class="issue-description">
+      {{ issue.description | markdown }}
+    </div>
+
+    <div class="issue-meta">
+      <div>Assignee: {{ issue.assignee_fullname }}</div>
+      <div>Estimation: {{ issue.estimation }}</div>
+
+      <div>Linked PRs:
+        {% for pr in prs %}
+        <a href="{{ pr.url }}">{{ pr.name }}</a><br>
+        {% endfor %}
+      </div>
+
+      <div>Linked tasks:
+        {% for t in tasks %}
+        <a href="#" hx-get="/issues/{{ t.id }}" hx-target="#issue-panel">{{ t.title }}</a><br>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="issue-comments">
+    {% for c in comments %}
+    <div class="comment">{{ c.text }}</div>
+    {% endfor %}
+  </div>
+</div>

@@ -1,0 +1,5 @@
+{% for issue in issues %}
+<div class="issue-card" hx-get="/issues/{{ issue.id }}" hx-target="#issue-panel" hx-swap="innerHTML">
+  {{ issue.title }}
+</div>
+{% endfor %}

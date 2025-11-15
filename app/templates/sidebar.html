@@ -1,0 +1,10 @@
+<div id="sidebar">
+  <div class="sidebar-header">Projects</div>
+  <div class="project-list">
+    {% for project in projects %}
+    <button class="project-item" hx-get="/projects/{{ project.id }}/board" hx-target="#main-board" hx-swap="innerHTML">
+      {{ project.title }}
+    </button>
+    {% endfor %}
+  </div>
+</div>

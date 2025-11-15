@@ -8,7 +8,7 @@ embed_migrations!("../migrations");
 
 #[tokio::main]
 async fn main() {
-    println!("cargo:rerun-if-changed=../migrations");
+    println!("cargo:rerun-if-changed=../migrations/**.sql");
     dotenvy::dotenv().ok();
     let runner = runner();
     migration_lib::run_migrations_async(runner)

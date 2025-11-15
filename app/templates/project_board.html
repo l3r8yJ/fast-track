@@ -1,0 +1,11 @@
+<div class="board">
+  {% for status in statuses %}
+  <div class="status-column">
+    <div class="status-title">{{ status.code }}</div>
+    <div id="status-{{ status.id }}" class="status-body" hx-get="/projects/{{ project.id }}/status/{{ status.id }}"
+      hx-trigger="load" hx-target="#status-{{ status.id }}">
+      <!-- Issues load here -->
+    </div>
+  </div>
+  {% endfor %}
+</div>

@@ -3,35 +3,28 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>{{ title }}</title>
-  <link rel="stylesheet" href="/static/style.css">
-  <script src="https://unpkg.com/htmx.org@2.0.2"></script>
+  <title>Issue Tracker</title>
+  <script src="https://unpkg.com/htmx.org"></script>
+  <script src="https://unpkg.com/hyperscript.org"></script>
+  <link rel="stylesheet" href="/static/style.css" />
 </head>
 
-<body>
-  <div class="app-container">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <h2 class="logo">🦀 {{ title }}</h2>
+<body class="app-grid">
 
-      <nav class="nav">
-        <a hx-get="/projects" hx-target="#main-content" class="nav-item">Projects</a>
-        <a hx-get="/backlog" hd-trigger="click" class="nav-item">Backlog</a>
-      </nav>
-    </aside>
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar" hx-get="/projects" hx-trigger="load" hx-target="#sidebar" hx-swap="innerHTML">
+  </aside>
 
-    <!-- Main Content -->
-    <main class="main">
-      <header class="main-header">
-        <h1>Dashboard</h1>
-      </header>
+  <!-- Kanban board area -->
+  <main id="main-board" class="board-area" hx-get="/projects/default/board" hx-trigger="load" hx-target="#main-board"
+    hx-swap="innerHTML">
+  </main>
 
-      <section id="main-content">
-        <p>Welcome to your fast tracker workspace.</p>
-        <p>Select a project or open the backlog to get started.</p>
-      </section>
-    </main>
-  </div>
+  <!-- Issue detail panel -->
+  <section id="issue-panel" class="issue-panel">
+    <!-- Populated when an issue card is clicked -->
+  </section>
+
 </body>
 
 </html>

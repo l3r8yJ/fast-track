@@ -19,7 +19,7 @@ async fn main() {
     // let (tx, _rx) = broadcast::channel::<String>(16);
     let db_connection = Arc::new(db::connection::get().await);
     let app = Router::new()
-        .nest_service("/static", ServeDir::new("./static"))
+        .nest_service("/static", ServeDir::new("./app/static"))
         .route("/", get(index))
         .route("/projects", get(projects_handler))
         .layer(Extension(db_connection));
